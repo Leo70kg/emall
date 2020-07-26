@@ -9,17 +9,19 @@ public interface IUserService {
 
     ServerResponse<String> register(User user);
 
-    public ServerResponse<String> checkValid(String str, String type);
+    ServerResponse<String> checkValid(String str, String type);
 
-    public ServerResponse selectQuestion(String username);
+    ServerResponse selectQuestion(String username);
 
-    public ServerResponse<String> checkAnswer(String username, String question, String answer);
+    ServerResponse<String> checkAnswer(String username, String question, String answer);
 
-    public ServerResponse<String> forgetResetPassword(String username, String passwordNew, String forgetToken);
+    ServerResponse<String> forgetResetPassword(String username, String passwordNew, String forgetToken);
 
-    public ServerResponse<String> resetPassword(String passwordOld, String passwordNew, User user);
+    ServerResponse<String> resetPassword(String passwordOld, String passwordNew, User user);
 
-    public ServerResponse<User> updateInformation(User user);
+    ServerResponse<User> updateInformation(User user);
 
-    public ServerResponse<User> getInformation(Integer userId);
+    ServerResponse<User> getInformation(Integer userId);
+
+    ServerResponse checkAdminRole(User user);
 }
