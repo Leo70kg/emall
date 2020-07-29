@@ -1,1 +1,1 @@
-A E-commerce framework
+A E-commerce backend framework
