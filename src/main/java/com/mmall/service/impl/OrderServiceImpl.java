@@ -66,15 +66,17 @@ public class OrderServiceImpl implements IOrderService {
     private ShippingMapper shippingMapper;
 
     public ServerResponse createOrder(Integer userId, Integer shippingId) {
+        //从购物车中获取数据
         List<Cart> cartList = cartMapper.selectCheckedCartByUserId(userId);
 
-        ServerResponse serverResponse = this.getCartOrderItem(userId, cartList);
-        if(!serverResponse.isSuccess()) {
+        //计算这个订单的总价
+        ServerResponse serverResponse = this.getCartOrderItem(userId,cartList);
+        if(!serverResponse.isSuccess()){
             return serverResponse;
         }
-        List<OrderItem> orderItemList = (List<OrderItem>) serverResponse.getData();
-
+        List<OrderItem> orderItemList = (List<OrderItem>)serverResponse.getData();
         BigDecimal payment = this.getOrderTotalPrice(orderItemList);
+
 
         Order order = assembleOrder(userId, shippingId, payment);
         if(order == null) {
@@ -189,6 +191,7 @@ public class OrderServiceImpl implements IOrderService {
         order.setStatus(Const.OrderStatusEnum.NO_PAY.getCode());
         order.setPostage(0);
         order.setPaymentType(Const.PaymentTypeEnum.ONLINE_PAY.getCode());
+        order.setPayment(payment);
 
         order.setUserId(userId);
         order.setShippingId(shippingId);
